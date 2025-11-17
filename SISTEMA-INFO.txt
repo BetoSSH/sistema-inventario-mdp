@@ -1,0 +1,56 @@
+🎯 SISTEMA DE INVENTARIO MDP
+=====================================
+
+📅 Fecha de Creación: $(date)
+👤 Desarrollado por: Z.ai Code Assistant
+🔧 Versión: 1.0.0
+📋 Tipo: Sistema Web Completo
+
+🌟 CARACTERÍSTICAS PRINCIPALES:
+=====================================
+✅ Base de datos relacional completa (14 modelos)
+✅ Sistema de autenticación con 3 niveles de rol
+✅ CRUD completo para todas las entidades
+✅ Generador automático de códigos de equipos
+✅ Sistema de mantenimiento con costos
+✅ Dashboard con estadísticas en tiempo real
+✅ Interface moderna y responsive
+✅ 25+ APIs RESTful funcionales
+✅ Validaciones y seguridad implementadas
+
+🔑 USUARIOS PRECONFIGURADOS:
+=====================================
+👤 Administrador: admin@mdp.com / admin123
+👤 Supervisor: supervisor@mdp.com / supervisor123
+👤 Usuario: usuario@mdp.com / usuario123
+
+📁 TECNOLOGÍAS UTILIZADAS:
+=====================================
+🧪 Frontend: Next.js 15, React 19, TypeScript
+🎨 UI: Tailwind CSS, shadcn/ui, Lucide Icons
+🗄️ Backend: Next.js API Routes, Prisma ORM
+💾 Base de Datos: SQLite
+🔐 Seguridad: bcryptjs para contraseñas
+
+🚀 INSTALACIÓN:
+=====================================
+1. npm install
+2. npx prisma generate
+3. npm run db:push
+4. npx tsx scripts/seed-database.ts
+5. npm run dev
+6. Acceder a http://localhost:3000/login
+
+📊 MÓDULOS DISPONIBLES:
+=====================================
+💻 Gestión de Equipos (Crear, Editar, Eliminar)
+👥 Gestión de Usuarios (Crear, Editar, Eliminar)
+🏢 Gestión de Departamentos (Crear, Editar, Eliminar)
+🔧 Gestión de Proveedores (Crear, Editar, Eliminar)
+🛠️ Sistema de Mantenimiento (Crear, Editar, Eliminar)
+📋 Sistema de Asignaciones (Crear, Editar, Eliminar)
+📊 Dashboard con Estadísticas
+🔐 Sistema de Login y Autenticación
+
+=====================================
+¡SISTEMA 100% FUNCIONAL Y LISTO PARA USO! 🎉

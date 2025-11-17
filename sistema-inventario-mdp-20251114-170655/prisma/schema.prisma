@@ -1,0 +1,232 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// === USUARIOS Y ROLES ===
+model Role {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+  permissions String // JSON string with permissions
+  users       User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Department {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+  location    String?
+  users       User[]
+  equipment   Equipment[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  password     String
+  name         String
+  position     String?
+  phone        String?
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  roleId       String
+  role         Role        @relation(fields: [roleId], references: [id])
+  isActive     Boolean     @default(true)
+  assignments  Assignment[]
+  loans        Loan[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+// === TIPOS DE EQUIPOS ===
+model EquipmentType {
+  id                String           @id @default(cuid())
+  name              String           @unique
+  code              String           @unique // L, PC, M, I, S, etc.
+  description       String?
+  hasSpecifications Boolean          @default(true)
+  fields            String           // JSON with dynamic fields configuration
+  equipment         Equipment[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+// === UBICACIONES ===
+model Location {
+  id          String     @id @default(cuid())
+  building    String
+  floor       String
+  office      String?
+  description String?
+  equipment   Equipment[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+// === EQUIPOS ===
+model Equipment {
+  id              String         @id @default(cuid())
+  code            String         @unique
+  equipmentTypeId String
+  equipmentType   EquipmentType  @relation(fields: [equipmentTypeId], references: [id])
+  brand           String
+  model           String
+  serialNumber    String?
+  status          EquipmentStatus @default(AVAILABLE)
+  locationId      String?
+  location        Location?      @relation(fields: [locationId], references: [id])
+  departmentId    String?
+  department      Department?    @relation(fields: [departmentId], references: [id])
+  purchaseDate    DateTime?
+  purchasePrice   Float?
+  depreciationRate Float?         @default(0.1) // 10% annual
+  currentValue     Float?
+  warrantyUntil   DateTime?
+  specifications   String         // JSON with dynamic specifications
+  assignments     Assignment[]
+  loans           Loan[]
+  maintenance     Maintenance[]
+  qrCode          String?        // Path to QR code image
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+// === ASIGNACIONES ===
+model Assignment {
+  id           String   @id @default(cuid())
+  equipmentId  String
+  equipment    Equipment @relation(fields: [equipmentId], references: [id])
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  assignedBy   String   // Admin/Supervisor who assigned
+  assignedAt   DateTime @default(now())
+  returnedAt   DateTime?
+  returnedBy   String?
+  notes        String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// === PRÉSTAMOS TEMPORALES ===
+model Loan {
+  id           String    @id @default(cuid())
+  equipmentId  String
+  equipment    Equipment @relation(fields: [equipmentId], references: [id])
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  loanedBy     String    // Admin/Supervisor who authorized
+  loanedAt     DateTime  @default(now())
+  expectedReturn DateTime?
+  returnedAt   DateTime?
+  returnedBy   String?
+  purpose      String?
+  status       LoanStatus @default(ACTIVE)
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+// === MANTENIMIENTO ===
+model Provider {
+  id          String       @id @default(cuid())
+  name        String
+  contact     String?
+  email       String?
+  phone       String?
+  services    String?      // JSON with services offered
+  maintenance Maintenance[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Maintenance {
+  id           String     @id @default(cuid())
+  equipmentId  String
+  equipment    Equipment  @relation(fields: [equipmentId], references: [id])
+  providerId   String?
+  provider     Provider?  @relation(fields: [providerId], references: [id])
+  type         MaintenanceType @default(CORRECTIVE)
+  description  String
+  cost         Float?
+  partsUsed    String?     // JSON with parts and costs
+  startDate    DateTime   @default(now())
+  endDate      DateTime?
+  performedBy  String?    // Internal or external technician
+  status       MaintenanceStatus @default(PENDING)
+  notes        String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+// === NOTIFICACIONES ===
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  type      NotificationType @default(INFO)
+  isRead    Boolean          @default(false)
+  relatedId String?          // Related entity ID
+  createdAt DateTime         @default(now())
+}
+
+// === CONFIGURACIÓN DEL SISTEMA ===
+model SystemConfig {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  description String?
+  updatedAt DateTime @updatedAt
+}
+
+// === ENUMS ===
+enum EquipmentStatus {
+  AVAILABLE
+  ASSIGNED
+  MAINTENANCE
+  DAMAGED
+  WAREHOUSE
+  RETIRED
+}
+
+enum LoanStatus {
+  ACTIVE
+  RETURNED
+  OVERDUE
+}
+
+enum MaintenanceType {
+  PREVENTIVE
+  CORRECTIVE
+  UPGRADE
+}
+
+enum MaintenanceStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum NotificationType {
+  INFO
+  WARNING
+  ERROR
+  SUCCESS
+}
