@@ -1,141 +1,222 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 🚀 Sistema de Inventario MDP
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+Un sistema completo y profesional de gestión de inventario de equipos de cómputo desarrollado con Next.js 15, TypeScript, Prisma y shadcn/ui.
 
-## ✨ Technology Stack
+## ✨ Características Principales
 
-This scaffold provides a robust foundation built with:
+### 🖥️ Gestión de Equipos
+- **Registro completo** de equipos por tipo (Laptops, Desktops, Monitores, etc.)
+- **Códigos automáticos** con formato: `M{TIPO}-{DEPTO}{NÚMERO}`
+- **Especificaciones dinámicas** según tipo de equipo
+- **Seguimiento de estado** (Disponible, Asignado, Mantenimiento, Retirado)
+- **Control de garantía** y fechas de compra
 
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+### 👥 Gestión de Usuarios
+- **3 niveles de acceso**: Administrador, Supervisor, Usuario
+- **Autenticación segura** con bcrypt
+- **Asignación por departamento**
+- **Control de activos/inactivos**
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### 🏢 Gestión Organizacional
+- **Departamentos** con códigos identificativos
+- **Proveedores** con información completa
+- **Ubicaciones** físicas de equipos
+- **Contactos y servicios**
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+### 🔧 Mantenimiento
+- **Tipos de mantenimiento**: Preventivo, Correctivo, Actualización
+- **Control de costos** y repuestos
+- **Historial completo** por equipo
+- **Programación automática**
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Axios** - Promise-based HTTP client
+### 📊 Reportes y Estadísticas
+- **Dashboard en tiempo real**
+- **Estadísticas por categoría**
+- **Reportes exportables**
+- **Gráficos interactivos**
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation Node.js and TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+## 🛠️ Stack Tecnológico
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+- **Frontend**: Next.js 15 con App Router
+- **Lenguaje**: TypeScript 5
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Base de Datos**: SQLite con Prisma ORM
+- **Autenticación**: bcryptjs
+- **UI Components**: Radix UI + Lucide Icons
+- **Estado**: React Hooks + Zustand
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
+## 🚀 Instalación Rápida
 
-## 🎯 Why This Scaffold?
+### Requisitos Previos
+- Node.js 18+ 
+- npm o yarn
 
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
-
-## 🚀 Quick Start
-
+### 1. Clonar el Repositorio
 ```bash
-# Install dependencies
+git clone https://github.com/sanchezrsec/sistema-inventario-mdp.git
+cd sistema-inventario-mdp
+```
+
+### 2. Instalar Dependencias
+```bash
 npm install
+```
 
-# Start development server
+### 3. Configurar Base de Datos
+```bash
+npx prisma db push
+npx tsx scripts/seed-database.ts
+```
+
+### 4. Iniciar el Sistema
+```bash
 npm run dev
+```
 
-# Build for production
+### 5. Acceder al Sistema
+- **URL**: http://localhost:3000
+- **Login**: http://localhost:3000/login
+
+## 🔑 Credenciales de Demostración
+
+| Rol | Email | Contraseña | Permisos |
+|-----|-------|------------|----------|
+| Administrador | admin@mdp.com | admin123 | Acceso completo |
+| Supervisor | supervisor@mdp.com | supervisor123 | Gestión y usuarios |
+| Usuario | user@mdp.com | user123 | Solo consulta |
+
+## 📁 Estructura del Proyecto
+
+```
+sistema-inventario-mdp/
+├── src/
+│   ├── app/                    # Páginas y API routes
+│   │   ├── api/               # Endpoints del backend
+│   │   ├── login/             # Página de autenticación
+│   │   ├── page.tsx           # Dashboard principal
+│   │   └── layout.tsx         # Layout principal
+│   ├── components/
+│   │   └── ui/                # Componentes shadcn/ui
+│   ├── lib/
+│   │   ├── db.ts              # Cliente Prisma
+│   │   └── utils.ts           # Utilidades
+│   └── hooks/                  # Custom React hooks
+├── prisma/
+│   └── schema.prisma          # Esquema de base de datos
+├── scripts/
+│   └── seed-database.ts       # Datos iniciales
+└── public/                    # Archivos estáticos
+```
+
+## 🎯 Funcionalidades Detalladas
+
+### Gestión de Equipos
+- ✅ Registro por tipo con especificaciones dinámicas
+- ✅ Generación automática de códigos únicos
+- ✅ Control de estado y ubicación
+- ✅ Historial de asignaciones
+- ✅ Seguimiento de mantenimiento
+
+### Sistema de Usuarios
+- ✅ 3 roles con permisos diferenciados
+- ✅ Autenticación segura
+- ✅ Gestión por departamentos
+- ✅ Control de sesión
+
+### Mantenimiento
+- ✅ Tipos de mantenimiento configurables
+- ✅ Control de costos y proveedores
+- ✅ Historial completo
+- ✅ Notificaciones automáticas
+
+### Reportes
+- ✅ Dashboard en tiempo real
+- ✅ Estadísticas por categoría
+- ✅ Exportación de datos
+- ✅ Gráficos interactivos
+
+## 🔧 Configuración
+
+### Variables de Entorno
+Crear archivo `.env.local`:
+```env
+NEXTAUTH_SECRET="tu-secreto-super-seguro-aqui"
+NEXTAUTH_URL="http://localhost:3000"
+DATABASE_URL="file:./dev.db"
+```
+
+### Base de Datos
+El sistema usa SQLite por defecto. Para cambiar a PostgreSQL:
+
+1. Instalar cliente: `npm install pg`
+2. Cambiar URL en `.env.local`: `DATABASE_URL="postgresql://..."`
+3. Ejecutar: `npx prisma db push`
+
+## 🚀 Despliegue
+
+### Vercel (Recomendado)
+```bash
 npm run build
+vercel --prod
+```
 
-# Start production server
+### Docker
+```bash
+docker build -t sistema-inventario-mdp .
+docker run -p 3000:3000 sistema-inventario-mdp
+```
+
+### Servidor Propio
+```bash
+npm run build
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+## 📱 Características Técnicas
 
-## 🤖 Powered by Z.ai
+- **Performance**: Optimizado con Next.js 15
+- **SEO**: Metadata optimizada
+- **Responsive**: Mobile-first design
+- **Accessibility**: WCAG 2.1 AA
+- **Type Safety**: TypeScript estricto
+- **Code Quality**: ESLint + Prettier
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+## 🔐 Seguridad
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+- **Autenticación** con bcrypt
+- **Validación** de datos con Zod
+- **SQL Injection** protegido por Prisma
+- **XSS Protection** con Next.js
+- **CSRF Protection** incluido
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+## 🤝 Contribuir
 
-## 📁 Project Structure
+1. Fork del repositorio
+2. Crear rama: `git checkout -b feature/nueva-funcionalidad`
+3. Commit: `git commit -m 'Agregar nueva funcionalidad'`
+4. Push: `git push origin feature/nueva-funcionalidad`
+5. Pull Request
 
-```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
-```
+## 📄 Licencia
 
-## 🎨 Available Features & Components
+Este proyecto está bajo licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
 
-This scaffold includes a comprehensive set of modern web development tools:
+## 📞 Soporte
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+- **Email**: sanchezrsec@gmail.com
+- **Issues**: [GitHub Issues](https://github.com/sanchezrsec/sistema-inventario-mdp/issues)
+- **Documentación**: [Wiki del Proyecto](https://github.com/sanchezrsec/sistema-inventario-mdp/wiki)
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+## 🙏 Agradecimientos
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
-
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Axios + TanStack Query
-- **State Management**: Simple and scalable with Zustand
-
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
-
-## 🤝 Get Started with Z.ai
-
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+- [Next.js](https://nextjs.org/) - Framework React
+- [Prisma](https://www.prisma.io/) - ORM de base de datos
+- [shadcn/ui](https://ui.shadcn.com/) - Componentes UI
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+- [Lucide](https://lucide.dev/) - Iconos
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+**Desarrollado con ❤️ por [sanchezrsec](https://github.com/sanchezrsec)**
+
+⭐ Si este proyecto te ayuda, ¡dale una estrella!
